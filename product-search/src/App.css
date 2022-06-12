@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  border: red 2px purple;
+}
+.category {
+  border: rgba(0, 0, 0, 0.164) 2px solid;
+  padding-top: 5vh;
+}
+.search {
+  display: flex;
+  height: 10vh;
+  justify-content: space-between;
+  /* border: red 2px solid; */
+  padding-left: 10vw;
+  padding: 0vw 10vw 0vw 10vw;
+  align-items: center;
+}
+.search-input {
+  width: 30vw;
+  height: 5vh;
+  border-radius: 5px;
+  border-color: blueviolet;
+}
+.row {
+  border-bottom: rgb(11, 228, 192) solid 1px;
+}
