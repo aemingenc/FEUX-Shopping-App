@@ -1,11 +1,11 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Basket from "./Basket";
 
-const Header = ({ countCardItems }) => {
+const Header = () => {
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -13,7 +13,7 @@ const Header = ({ countCardItems }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Our name is brand(A.E.G)
           </Typography>
-          <Button color="inherit">Our name is brand(A.E.G)</Button>
+          <Basket />
         </Toolbar>
       </AppBar>
     </Box>

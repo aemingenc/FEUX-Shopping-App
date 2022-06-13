@@ -12,7 +12,7 @@ const Category = ({ selectedCategories, setSelectedCategories }) => {
 
     categoryPromise.then((data) => setCategories(data?.data || []));
   }, [dispatch]);
-  console.log("useess");
+ 
   // if (loading) return <>Loading...</>
 
   const handleChange = (event) => {

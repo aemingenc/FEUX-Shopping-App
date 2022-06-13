@@ -1,12 +1,56 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Drawer } from "@mui/material";
-import React, { useState } from "react";
+import { clearBox, updateBox } from "../redux/actions/boxActions";
 
-const Basket = ({ cartItems, onAdd, onRemove }) => {
+const Basket = () => {
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state.box);
+
+  const [open, setOpen] = useState(false);
+
+  const onAdd = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id);
+
+    if (exist) {
+      dispatch(
+        updateBox(
+          cartItems.map((x) =>
+            x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+          )
+        )
+      );
+    } else {
+      dispatch(updateBox([...cartItems, { ...product, qty: 1 }]));
+    }
+  };
+
+  const onRemove = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id);
+
+    if (exist.qty === 1) {
+      dispatch(updateBox(cartItems.filter((x) => x.id !== product.id)));
+    } else {
+      dispatch(
+        updateBox(
+          cartItems.map((x) =>
+            x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
+          )
+        )
+      );
+    }
+  };
+
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.price, 0);
   const taxPrice = itemsPrice * 0.14;
   const shippingPrice = itemsPrice > 2000 ? 0 : 20;
   const totalPrice = itemsPrice + taxPrice + shippingPrice;
-  const [open, setOpen] = useState(false);
+
+  const pricesSection = [
+    { name: "Items price", value: itemsPrice },
+    { name: "Tax price", value: taxPrice },
+    { name: "Shipping price", value: shippingPrice },
+  ];
 
   return (
     <aside>
@@ -19,7 +63,6 @@ const Basket = ({ cartItems, onAdd, onRemove }) => {
       <Drawer open={open} anchor={"right"} onClose={() => setOpen(false)}>
         <h2>Card Items</h2>
         <div>{cartItems.length === 0} </div>
-        {console.log(cartItems)}
         {cartItems.map((item) => (
           <div key={item.title} className="row">
             <img
@@ -27,7 +70,6 @@ const Basket = ({ cartItems, onAdd, onRemove }) => {
               alt=""
               style={{ width: "40px", height: "40px" }}
             />
-            {console.log(item)}
             <div className="col-2">{item.title}</div>
             <div className="col-2">
               <button onClick={() => onRemove(item)} className="remove">
@@ -46,20 +88,14 @@ const Basket = ({ cartItems, onAdd, onRemove }) => {
         {cartItems.length !== 0 && (
           <>
             <hr></hr>
-            <div className="row">
-              <div className="col-2">Items Price</div>
-              <div className="col-1 text-right">${itemsPrice.toFixed(2)}</div>
-            </div>
-            <div className="row">
-              <div className="col-2">Tax Price</div>
-              <div className="col-1 text-right">${taxPrice.toFixed(2)}</div>
-            </div>
-            <div className="row">
-              <div className="col-2">Shipping Price</div>
-              <div className="col-1 text-right">
-                ${shippingPrice.toFixed(2)}
+            {pricesSection.map((price, index) => (
+              <div key={index} className="row">
+                <div className="col-2">{price.name}</div>
+                <div className="col-1 text-right">
+                  ${price.value.toFixed(2)}
+                </div>
               </div>
-            </div>
+            ))}
             <hr />
             <div className="row">
               <div className="col-2">
@@ -74,6 +110,7 @@ const Basket = ({ cartItems, onAdd, onRemove }) => {
               <button onClick={() => alert("Implement Checkout!")}>
                 Checkout
               </button>
+              <button onClick={() => dispatch(clearBox())}>Clear Basket</button>
             </div>
           </>
         )}

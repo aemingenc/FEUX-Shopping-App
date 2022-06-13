@@ -1,6 +1,26 @@
 import React from "react";
 
-function Order({ count, sortProducts }) {
+function Order({ productListData, setProductListData }) {
+  
+  const sortProducts = (e) => {
+    const sorted = e.target.value;
+    const newProductListData = [...productListData];
+    newProductListData.sort((a, b) =>
+      sorted === "lowest"
+        ? a.price > b.price
+          ? 1
+          : -1
+        : sorted === "highest"
+        ? a.price < b.price
+          ? 1
+          : -1
+        : a.id < b.id
+        ? 1
+        : -1
+    );
+    setProductListData(newProductListData);
+  };
+  
   return (
     <div>
       {/* <div className='counter'>{count}</div> */}
