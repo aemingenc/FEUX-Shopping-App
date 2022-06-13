@@ -1,71 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Cards from "../components/Cards";
+import { Container, Grid } from "@mui/material";
+
 import { getProductList } from "../redux/thunks/appThunks";
-import Grid from "@mui/material/Grid";
-import { Container } from "@mui/material";
+
+import Cards from "../components/Cards";
 import Header from "../components/Header";
 import Category from "../components/Category";
-import Basket from "../components/Basket";
 import Order from "../components/Order";
+import { updateBox } from "../redux/actions/boxActions";
 
 const Main = () => {
   const dispatch = useDispatch();
-  // distracting
-  // const {loading,productList} = useSelector(state=>state)
   const { productList } = useSelector((state) => state.product);
+  const { cartItems } = useSelector((state) => state.box);
+
   const [productListData, setProductListData] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState({});
-  const [cartItems, setCartItems] = useState([]);
-  const [sort, setSort] = useState([]);
-
-  const onAdd = (product) => {
-    const exist = cartItems.find((x) => x.id === product.id);
-    if (exist) {
-      setCartItems(
-        cartItems.map((x) =>
-          x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
-        )
-      );
-    } else {
-      setCartItems([...cartItems, { ...product, qty: 1 }]);
-    }
-  };
-  const onRemove = (product) => {
-    const exist = cartItems.find((x) => x.id === product.id);
-    if (exist.qty === 1) {
-      setCartItems(cartItems.filter((x) => x.id !== product.id));
-    } else {
-      setCartItems(
-        cartItems.map((x) =>
-          x.id === product.id ? { ...exist, qty: exist.qty - 1 } : x
-        )
-      );
-    }
-  };
-  const sortProducts = (e) => {
-    const sorted = e.target.value;
-    console.log(e.target.value);
-    setSort(
-      productListData
-        .slice()
-        .sort((a, b) =>
-          sorted === "lowest"
-            ? a.price < b.price
-              ? 1
-              : -1
-            : sorted === "highest"
-            ? a.price > b.price
-              ? 1
-              : -1
-            : a.id < b.id
-            ? 1
-            : -1
-        )
-    );
-    setProductListData(sort);
-  };
-  console.log(sort);
 
   useEffect(() => {
     dispatch(getProductList());
@@ -82,12 +33,25 @@ const Main = () => {
     setProductListData(newData);
   };
 
-  //    if (loading) return <>Loading...</>;
+  const onAdd = (product) => {
+    const exist = cartItems.find((x) => x.id === product.id);
+
+    if (exist) {
+      dispatch(
+        updateBox(
+          cartItems.map((x) =>
+            x.id === product.id ? { ...exist, qty: exist.qty + 1 } : x
+          )
+        )
+      );
+    } else {
+      dispatch(updateBox([...cartItems, { ...product, qty: 1 }]));
+    }
+  };
 
   return (
     <>
       <Header />
-
       <div className="container">
         <div className="category">
           <Category
@@ -104,13 +68,10 @@ const Main = () => {
               onChange={(e) => onSearchChange(e.target.value)}
             />
             <Order
-              count={productListData.length}
-              sortProducts={sortProducts}
-              sort={sort}
+              productListData={productListData}
+              setProductListData={setProductListData}
             />
           </div>
-          <Basket cartItems={cartItems} onAdd={onAdd} onRemove={onRemove} />
-
           <Container className="product_list">
             <Grid container spacing={3}>
               {productListData?.map((product) =>
@@ -122,7 +83,7 @@ const Main = () => {
                 ) : (
                   selectedCategories[product.category] && (
                     <Grid item key={product.id} xs={12} md={6} lg={4}>
-                      <Cards product={product} />
+                      <Cards key={product.id} product={product} onAdd={onAdd} />
                     </Grid>
                   )
                 )

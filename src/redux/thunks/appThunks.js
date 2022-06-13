@@ -21,7 +21,6 @@ export const getCategories = () => {
       const response = await axios.get(
         "https://fakestoreapi.com/products/categories"
       );
-      console.log("useess");
       return response;
     } catch (error) {
       console.log(error);

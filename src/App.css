@@ -5,6 +5,7 @@
 .category {
   border: rgba(0, 0, 0, 0.164) 2px solid;
   padding-top: 5vh;
+  background-color: #fafafa;
 }
 .search {
   display: flex;
