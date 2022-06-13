@@ -72,12 +72,12 @@ const Basket = () => {
             />
             <div className="col-2">{item.title}</div>
             <div className="col-2">
-              <button onClick={() => onRemove(item)} className="remove">
+              <Button  variant="contained" size="small" color="secondary" onClick={() => onRemove(item)} className="remove">
                 -
-              </button>{" "}
-              <button onClick={() => onAdd(item)} className="add">
+              </Button>{" "}
+              <Button  variant="contained" size="small" color="success" onClick={() => onAdd(item)} className="add">
                 +
-              </button>
+              </Button>
             </div>
 
             <div className="col-2 text-right">
@@ -90,7 +90,7 @@ const Basket = () => {
             <hr></hr>
             {pricesSection.map((price, index) => (
               <div key={index} className="row">
-                <div className="col-2">{price.name}</div>
+                <div className="col-2"><strong>{price.name}</strong></div>
                 <div className="col-1 text-right">
                   ${price.value.toFixed(2)}
                 </div>
@@ -107,10 +107,10 @@ const Basket = () => {
             </div>
             <hr />
             <div className="row">
-              <button onClick={() => alert("Implement Checkout!")}>
+              <Button variant="contained" size="small" color="success" onClick={() => alert("Implement Checkout!")}>
                 Checkout
-              </button>
-              <button onClick={() => dispatch(clearBox())}>Clear Basket</button>
+              </Button>
+              <Button variant="contained" color="error" size="small"  onClick={() => dispatch(clearBox())}>Clear Basket</Button>
             </div>
           </>
         )}

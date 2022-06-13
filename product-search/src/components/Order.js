@@ -1,3 +1,4 @@
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React from "react";
 
 function Order({ productListData, setProductListData }) {
@@ -20,15 +21,21 @@ function Order({ productListData, setProductListData }) {
     );
     setProductListData(newProductListData);
   };
-  
+
   return (
     <div>
       {/* <div className='counter'>{count}</div> */}
       <div className="order">
-        <select onChange={sortProducts}>
-          <option value="lowest">lowest</option>
-          <option value="highest">highest</option>
-        </select>
+      <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Order</InputLabel>
+        <Select label="Order" onChange={sortProducts}>
+          <MenuItem value="lowest">lowest</MenuItem>
+          <MenuItem value="highest">highest</MenuItem>
+        </Select>
+        </FormControl>
+    </Box>
+   
       </div>
     </div>
   );
