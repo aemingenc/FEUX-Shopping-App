@@ -27,7 +27,7 @@ function Order({ productListData, setProductListData }) {
       {/* <div className='counter'>{count}</div> */}
       <div className="order">
       <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-simple-select-label">Order</InputLabel>
         <Select label="Order" onChange={sortProducts}>
           <MenuItem value="lowest">lowest</MenuItem>
