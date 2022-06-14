@@ -10,6 +10,8 @@ import Category from "../components/Category";
 import Order from "../components/Order";
 import { updateBox } from "../redux/actions/boxActions";
 
+import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
+
 const Main = () => {
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.product);
@@ -54,10 +56,13 @@ const Main = () => {
       <Header />
       <div className="container">
         <div className="category">
+          <ScopedCssBaseline>
+
           <Category
             selectedCategories={selectedCategories}
             setSelectedCategories={setSelectedCategories}
           />
+          </ScopedCssBaseline>
         </div>
         <div>
           <div className="search">

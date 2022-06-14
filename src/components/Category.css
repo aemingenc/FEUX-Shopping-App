@@ -1,0 +1,21 @@
+.checkboxes {
+  background-color: rgba(0, 255, 255, 0.205) !important;
+  border-radius: 30px !important;
+}
+.checkboxes :hover {
+  background-color: rgba(0, 255, 255, 0.205) !important;
+  border-radius: 30px !important;
+}
+
+.li {
+  background-color: whitesmoke !important;
+  font-family: "Shadows Into Light", cursive;
+  font-weight: 700;
+  border-bottom: solid rgba(0, 0, 0, 0.103) 1px !important;
+}
+.li :hover {
+  background-color: #d61e1e !important;
+}
+.option :hover {
+  background-color: rgba(255, 0, 0, 0.096) !important;
+}
