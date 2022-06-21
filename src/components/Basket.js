@@ -62,7 +62,6 @@ const Basket = () => {
       </Button>
       <Drawer open={open} anchor={"right"} onClose={() => setOpen(false)}>
         <h2>Card Items</h2>
-        <div>{cartItems.length === 0} </div>
         {cartItems.map((item) => (
           <div key={item.title} className="row">
             <img
